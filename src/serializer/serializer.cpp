@@ -2,7 +2,7 @@
 #include <fstream>
 #include <filesystem>
 
-void Serializer::salvar(Index index, string arquivo){
+void Serializer::salvar(Index index){
 	index.criarArquivoIndex();
 }
 Index Serializer::carregar(){
@@ -11,7 +11,8 @@ Index Serializer::carregar(){
 	ifstream arquivo("index.dat", ios::binary);
 	if (!arquivo.is_open()){
 		cout << "Erro ao abrir o arquivo index.dat" << endl;
-		return;
+		index.indiceCriado = false;
+		return index;
 	}
 	string linha;
 	while (getline(arquivo, linha)){
@@ -29,5 +30,22 @@ Index Serializer::carregar(){
 		indiceDoArquivo[palavra] = ids;
 	}
 	index.popularIndiceDeArquivo(indiceDoArquivo);
+	arquivo.close();
+	unordered_map<unsigned int, string> ids;
+	ifstream arquivoIds("ids.dat", ios::binary);
+	if (!arquivoIds.is_open()){
+		cout << "Erro ao abrir o arquivo ids.dat" << endl;
+		index.indiceCriado = false;
+		return index;
+	}
+	string linhaIds;
+	while (getline(arquivoIds, linhaIds)){
+		size_t pos = linhaIds.find(":");
+		unsigned int id = stoi(linhaIds.substr(0, pos));
+		string nomeArquivo = linhaIds.substr(pos + 1);
+		ids[id] = nomeArquivo;
+	}
+	index.popularIdParaArquivo(ids);
+	arquivoIds.close();
 	return index;
 }

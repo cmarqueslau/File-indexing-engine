@@ -1,11 +1,32 @@
-all:
-	g++ -c src/indexer/indexer.cpp -o output/indexer.o
-	g++ -c src/index/index.cpp -o output/index.o
-	g++ -c src/serializer/serializer.cpp -o output/serializer.o
-	g++ -c src/query-processor/query-processor.cpp -o output/query-processor.o
-	g++ -c src/text-processor/text-processor.cpp -o output/text-processor.o
-	g++ -c src/command-line-interface.cpp -o output/command-line-interface.o
-	g++ output/text-processor.o output/indexer.o output/index.o output/serializer.o output/query-processor.o output/command-line-interface.o -o output/main
+# Compilador e flags
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -Wextra -Isrc
 
+# Pastas
+SRCDIR = src
+OBJDIR = output
+
+# Procura recursivamente todos .cpp dentro de src/
+SRCS = $(shell find $(SRCDIR) -name '*.cpp')
+
+# Converte src/xxx.cpp → output/xxx.o
+OBJS = $(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
+
+# Executável final
+TARGET = $(OBJDIR)/main
+
+# Regra padrão
+all: $(TARGET)
+
+# Como gerar o executável
+$(TARGET): $(OBJS)
+	$(CXX) $(OBJS) -o $@
+
+# Como gerar cada .o automaticamente
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Limpeza
 clean:
-	rm -rf output
+	rm -rf $(OBJDIR)

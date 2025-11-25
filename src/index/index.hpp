@@ -11,6 +11,8 @@ class Index{
 	vector<string> getArquivosPorPalavra(string& palavra);
 	void criarArquivoIndex();
 	void popularIndiceDeArquivo(unordered_map<string, unordered_set<unsigned int>> indiceDoArquivo);
+	bool indiceCriado = true;
+	void popularIdParaArquivo(unordered_map<unsigned int, string> ids);
 	private:
 	unordered_map<string, unordered_set<unsigned int>> indice;
 	unordered_map<unsigned int, string> idParaArquivo;
