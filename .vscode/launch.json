@@ -1,0 +1,24 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "c:/Users/LOUISE/OneDrive/BCC/4/Algoritmos_EstruturasDeDados_2/Trabalho/File-indexing-engine/src/text-processor",
+      "program": "c:/Users/LOUISE/OneDrive/BCC/4/Algoritmos_EstruturasDeDados_2/Trabalho/File-indexing-engine/src/text-processor/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    }
+  ]
+}
