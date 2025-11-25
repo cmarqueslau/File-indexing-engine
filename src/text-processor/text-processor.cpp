@@ -1,7 +1,12 @@
 #include "text-processor.hpp"
 #include <unordered_map>
 #include <unordered_set>
+#include <filesystem>
+#include <fstream>
+#include "utils/utils.hpp"
 ;
+Utils utils;
+
 static const unordered_set<string> set_acentos = {"á", "à", "ã", "â", "Á", "À", "Ã", "Â", "é", "ê", "É", "Ê", "í", "Í", "ó", "ô", "õ", "Ó", "Ô", "Õ", "ú", "Ú", "ç", "Ç"};
 static const unordered_map<string, string> mapa_acentos = {
     {"Á", "á"},
@@ -17,6 +22,24 @@ static const unordered_map<string, string> mapa_acentos = {
     {"Ú", "ú"},
     {"Ç", "ç"},
 };
+
+bool is_stopword(const string &palavra){
+	filesystem::path stopwords_path = "common/stopwords.txt";
+	ifstream file(stopwords_path);
+	if (!file.is_open()){
+		cerr << "Erro ao abrir o arquivo de stopwords." << endl;
+		return false;
+	}
+	string linha;
+	while (getline(file, linha)){
+		if (utils.trim(linha) == palavra){
+			file.close();
+			return true;
+		}
+	}
+	file.close();
+	return false;
+}
 string next_utf8_char(const string &s, size_t &i){
 	unsigned char c = s[i];
 	size_t len = 1;
@@ -30,14 +53,12 @@ string next_utf8_char(const string &s, size_t &i){
 	i += len;
 	return ch;
 }
-vector<string> TextProcessor::processar(string texto){
+vector<string> TextProcessor::processar(string &texto){
 	vector<string> aux;
 	string palavra;
 	bool is_word = false;
-
 	size_t i = 0;
-	while (i < texto.size())
-	{
+	while (i < texto.size()){
 		string ch = next_utf8_char(texto, i);
 		if (mapa_acentos.count(ch)){
 			palavra += mapa_acentos.at(ch);
@@ -56,7 +77,7 @@ vector<string> TextProcessor::processar(string texto){
 		}
 		if (ch == " " || ch == "\n" || ch == "\t"){
 			if (is_word){
-				aux.push_back(palavra);
+				if(!is_stopword(palavra)) aux.push_back(palavra);
 				palavra.clear();
 			}
 			is_word = false;
@@ -64,7 +85,8 @@ vector<string> TextProcessor::processar(string texto){
 		}
 	}
 
-	if (!palavra.empty()) aux.push_back(palavra);
+	if (!palavra.empty() && !is_stopword(palavra)) aux.push_back(palavra);
 
 	return aux;
 }
+

@@ -4,5 +4,5 @@
 using namespace std;
 class TextProcessor{
 	public:
-	vector<string> processar(string texto);
+	vector<string> processar(string &texto);
 };
