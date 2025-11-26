@@ -8,17 +8,17 @@ realize buscas por palavras-chave, retornando de forma eficiente a lista de docu
 contêm os termos pesquisados.
 
 ## Como compilar
-<pre>```make```</pre>
+<pre>make</pre>
 
 ## Modo de execução
 
 ### Modo Indexação
-<pre>```./output/main indice construir caminho_do_diretorio```</pre>
+<pre>./output/main indice construir caminho_do_diretorio</pre>
 Este comando varre o diretório especificado, constroi o índice invertido e o salva em um
 arquivo padrão index.dat no diretório atual
 
 ### Modo Busca
-<pre>```./output/main buscar termos_de_busca```</pre>
+<pre>./output/main buscar termos_de_busca</pre>
 Este comando primeiro verifica se o arquivo de índice existe na pasta atual. Se não,
 informa ao usuário para executar a indexação primeiro. Se o índice existir, ele é carregado
 em memória, a busca é realizada e os nomes dos arquivos relevantes são impressos na tela.
