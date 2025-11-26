@@ -6,6 +6,6 @@ using namespace std;
 
 class Serializer{
 	public:
-	void salvar(Index index);
+	void salvar(Index& index);
 	Index carregar();
 };

@@ -32,7 +32,7 @@ Index Indexer::construir(string diretorio){
 			while (getline(file, linha)){
 				vector<string> palavras = textProcessor.processar(linha);
 				for (auto &palavra : palavras){
-					index.adicionar(palavra, entry.path().string());
+					index.adicionar(palavra, filesystem::absolute(entry.path()).string());
 				}
 			}
 			file.close();
