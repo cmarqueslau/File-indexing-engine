@@ -18,7 +18,7 @@ Este comando varre o diretório especificado, constroi o índice invertido e o s
 arquivo padrão index.dat no diretório atual
 
 ### Modo Busca
-<pre>./output/main buscar termos_de_busca</pre>
+<pre>./output/main indice buscar termos_de_busca</pre>
 Este comando primeiro verifica se o arquivo de índice existe na pasta atual. Se não,
 informa ao usuário para executar a indexação primeiro. Se o índice existir, ele é carregado
 em memória, a busca é realizada e os nomes dos arquivos relevantes são impressos na tela.
